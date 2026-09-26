@@ -1,0 +1,4 @@
+[package]
+name = "yaesu-ft3dr-decrypt"
+version = "1.0.0"
+edition = "2021"
