@@ -4,7 +4,7 @@ Decrypt the firmware image carried by an official Yaesu FT3DR updater executable
 
 The updater is a PE32 program. The encrypted image sits in a custom resource. This tool reads that resource, reads the cipher tables out of the same executable, derives a session key from the resource timestamp, and writes the plaintext bytes.
 
-The program does not embed key material. The static tables are read from the updater executable you pass on the command line.
+The program does not embed key material. The static tables are read from the updater executable.
 
 ## Build
 
@@ -16,7 +16,29 @@ cargo build --release
 
 The binary is `target/release/yaesu-ft3dr-decrypt` (`yaesu-ft3dr-decrypt.exe` on Windows).
 
+## Window
+
+Version 1.1 opens a window when the program is started with no arguments. Double-clicking the exe is that case.
+
+The window title is `FT3DR Firmware Decrypt`.
+
+Browse selects the updater executable. The updater can also be dropped onto the window. The first dropped file is used.
+
+The output path starts as the updater's file stem with `.bin`, in the same directory. Save as, or typing in the output field, chooses a different path. After the user edits that field, picking a new updater does not replace it.
+
+Decrypt reads the updater, writes the plaintext firmware image, and shows the timestamp with its UTC text, the trailer strings, the byte count, the SHA-256 of the plaintext, and the path written.
+
+If the output file already exists, the program asks `Replace the existing file?` and does not write on No.
+
+Errors are shown in a dialog and on the status line. Success status is `Done.`
+
+Enter activates Decrypt. Escape closes the window.
+
+A release build does not open a console window when started with no arguments. Passing an updater on the command line still prints to the console when one is attached.
+
 ## Run
+
+Arguments select the command line. No arguments select the window.
 
 ```text
 yaesu-ft3dr-decrypt <updater.exe> [-o output.bin]
